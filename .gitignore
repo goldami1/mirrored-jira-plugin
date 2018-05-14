@@ -1,2 +1,4 @@
 .idea/
-/plugin/statusReminder/target/*
+*.iml
+target/
+build/
