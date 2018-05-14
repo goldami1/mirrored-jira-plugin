@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class MyComponentUnitTest {
     @Test
     public void testMyName() {
-        MyPluginComponent component = new MyPluginComponentImpl(null);
+        MyPluginComponent component = new MyPluginComponentImpl(null, null);
         assertEquals("names do not match!", "myComponent", component.getName());
     }
 }
