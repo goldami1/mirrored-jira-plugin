@@ -1,24 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
-    <plugin-info>
-        <description>${project.description}</description>
-        <version>${project.version}</version>
-        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
-        <param name="plugin-icon">images/pluginIcon.png</param>
-        <param name="plugin-logo">images/pluginLogo.png</param>
-    </plugin-info>
-
-    <!-- add our i18n resource -->
-    <resource type="i18n" name="i18n" location="jira-scheduled-mail-plugin"/>
-
-    <!-- add our web resources -->
-    <web-resource key="jira-scheduled-mail-plugin-resources" name="jira-scheduled-mail-plugin Web Resources">
-        <dependency>com.atlassian.auiplugin:ajs</dependency>
-
-        <resource type="download" name="jira-scheduled-mail-plugin.css" location="/css/jira-scheduled-mail-plugin.css"/>
-        <resource type="download" name="jira-scheduled-mail-plugin.js" location="/js/jira-scheduled-mail-plugin.js"/>
-        <resource type="download" name="images/" location="/images"/>
-
-        <context>jira-scheduled-mail-plugin</context>
-    </web-resource>
-
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="jira-scheduled-mail-plugin"/>
+  <!-- add our web resources -->
+  <web-resource key="jira-scheduled-mail-plugin-resources" name="jira-scheduled-mail-plugin Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="jira-scheduled-mail-plugin.css" location="/css/jira-scheduled-mail-plugin.css"/>
+    <resource type="download" name="jira-scheduled-mail-plugin.js" location="/js/jira-scheduled-mail-plugin.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>jira-scheduled-mail-plugin</context>
+  </web-resource>
+  <web-section name="mySection" i18n-name-key="my-section.name" key="my-section" location="my-item-link" weight="1000">
+    <description key="my-section.description">The mySection Plugin</description>
+    <label key="my-section.label"/>
+  </web-section>
+  <web-item name="myItem" i18n-name-key="my-item.name" key="my-item" section="system.top.navigation.bar" weight="1000">
+    <description key="my-item.description">The myItem Plugin</description>
+    
+    <link linkId="my-item-link"></link>
+  </web-item>
 </atlassian-plugin>
