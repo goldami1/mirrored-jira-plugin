@@ -1,6 +1,5 @@
 package org.mta.oss.impl;
 
-import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.IssueManager;
 import com.atlassian.jira.issue.search.SearchException;
@@ -8,11 +7,14 @@ import com.atlassian.jira.issue.search.SearchRequest;
 import com.atlassian.jira.bc.JiraServiceContextImpl;
 import com.atlassian.jira.bc.filter.SearchRequestService;
 import com.atlassian.jira.bc.issue.search.SearchService;
+import com.atlassian.jira.component.ComponentAccessor;
 import com.atlassian.jira.project.Project;
+import com.atlassian.jira.project.ProjectManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.plugin.spring.scanner.annotation.component.Scanned;
 import com.atlassian.plugin.spring.scanner.annotation.export.ExportAsService;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.atlassian.plugin.spring.scanner.annotation.imports.JiraImport;
 import com.atlassian.query.Query;
 import com.atlassian.sal.api.ApplicationProperties;
 
@@ -28,6 +30,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+
 @ExportAsService({MyPluginComponent.class})
 @Named("myPluginComponent")
 @Scanned
@@ -37,6 +40,8 @@ public class MyPluginComponentImpl implements MyPluginComponent {
     private final ApplicationProperties m_ApplicationProperties;
     private final IssueManager m_IssueManager;
     private final SearchService m_SearchService;
+    private final ProjectManager m_ProjectManager;
+    
     private List<Project> m_ProjectsList;
     private List<ApplicationUser> m_NotifiedAdmins;
     private List<Issue> m_FilteredIssuesToBeMailed;
@@ -44,16 +49,18 @@ public class MyPluginComponentImpl implements MyPluginComponent {
     @Inject
     public MyPluginComponentImpl(	@ComponentImport final ApplicationProperties i_ApplicationProperties,
     								@ComponentImport final IssueManager i_IssueManager,
-    								@ComponentImport final SearchService i_SearchService)
+    								@ComponentImport final SearchService i_SearchService,
+    								@JiraImport("com.atlassian.jira.project.ProjectManager") final ProjectManager i_ProjectManager)
     {
         m_ApplicationProperties = i_ApplicationProperties;
         m_IssueManager = i_IssueManager;
         m_SearchService = i_SearchService;
+        m_ProjectManager = i_ProjectManager;
         
     	Collection<Long> issuesIds = null;
         List<Issue> issuesList = null;
         m_NotifiedAdmins = new LinkedList<>();
-        m_ProjectsList = ComponentAccessor.getProjectManager().getProjects();
+        m_ProjectsList = m_ProjectManager.getProjects();
         
         
         for(Project proj : m_ProjectsList)
@@ -110,9 +117,6 @@ public class MyPluginComponentImpl implements MyPluginComponent {
 			(new Exception(errorMsg)).printStackTrace();
 		}
 		//<end>
-		
-		
-		
     }    
     
 
